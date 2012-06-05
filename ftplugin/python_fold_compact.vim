@@ -15,7 +15,8 @@ setlocal tabstop=4
 setlocal foldexpr=g:Python_fold_compact()
 setlocal foldtext=g:Python_fold_compact_text()
 setlocal foldmethod=expr  "}}}
-if exists("g:Python_fold_compact") | finish | endif
+if exists("g:loaded_python_fold_compact") | finish | endif
+let g:loaded_python_fold_compact = 1
 function g:Python_fold_compact() "{{{
     if getline(v:lnum) =~ '^\s*$'  || getline(v:lnum) =~ '^\s*#'
         return '='
@@ -38,7 +39,7 @@ function g:Python_fold_compact() "{{{
     endif
 endfunc "}}}
 function g:Python_fold_compact_text() "{{{
-    let width = winwidth('.') - 6 - &l:foldcolumn - (&l:number ? &l:numberwidth : 0) - 2
+    let width = winwidth(0) - 6 - &l:foldcolumn - (&l:number ? &l:numberwidth : 0) - 2
     if width < 20 | return foldtext() | endif
     let line = getline(v:foldstart)
     let spaces = strlen(matchstr(line,'^ *'))
