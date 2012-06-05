@@ -14,9 +14,13 @@ setlocal expandtab
 setlocal tabstop=4 
 setlocal foldexpr=g:Python_fold_compact()
 setlocal foldtext=g:Python_fold_compact_text()
-setlocal foldmethod=expr  "}}}
-if exists("g:loaded_python_fold_compact") | finish | endif
-let g:loaded_python_fold_compact = 1
+setlocal foldmethod=expr  
+if line('$') < winheight(0)
+    normal zR
+endif
+"}}}
+if exists("g:load_python_fold_compact") | finish | endif
+let g:load_python_fold_compact = 1
 function g:Python_fold_compact() "{{{
     if getline(v:lnum) =~ '^\s*$'  || getline(v:lnum) =~ '^\s*#'
         return '='
