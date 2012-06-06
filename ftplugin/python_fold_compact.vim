@@ -15,9 +15,7 @@ setlocal tabstop=4
 setlocal foldexpr=g:Python_fold_compact()
 setlocal foldtext=g:Python_fold_compact_text()
 setlocal foldmethod=expr  
-if line('$') < winheight(0)
-    normal zR
-endif
+au BufWinEnter <buffer> call g:Python_fold_compact_little_text()
 "}}}
 if exists("g:load_python_fold_compact") | finish | endif
 let g:load_python_fold_compact = 1
@@ -64,4 +62,11 @@ function g:Python_fold_compact_text() "{{{
     endif
     let lines = substitute(printf('%6d',v:foldend - v:foldstart + 1),' ','-','g')
     return line . lines
+endfunc "}}}
+function g:Python_fold_compact_little_text() "{{{
+    if exists("b:python_fold_compact_little_text_done") | return | endif
+    let b:python_fold_compact_little_text_done = 1
+    if line('$') < winheight(0)
+        normal zR
+    endif
 endfunc "}}}
